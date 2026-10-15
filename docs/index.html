@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Deposit Verdict — Security Deposit Judge</title>
+<meta name="description" content="Itemize deductions, check your deadline and documentation, and see your court exposure before you withhold a dollar.">
+<link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icons/icon-32.png"><link rel="apple-touch-icon" href="icons/icon-180.png">
+<meta name="theme-color" content="#140E07">
+<style>
+:root{--bg:#140E07;--surface:#1F1509;--surface2:#2A1D0E;--text:#F4EDDE;--muted:#C9BBA0;--accent:#C6A052;--accent2:#5C3F22;--red:#C96A5A;--green:#8FB573;--line:#5C3F22}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Georgia,'Times New Roman',serif;line-height:1.5}
+.wrap{max-width:1080px;margin:0 auto;padding:22px 18px 60px}
+header{text-align:center;padding:28px 10px 18px;border-bottom:3px solid var(--accent)}
+.eyebrow{letter-spacing:.28em;text-transform:uppercase;color:var(--accent);font-size:.72rem;font-weight:bold}
+h1{font-size:clamp(2.1rem,6vw,3.6rem);margin:.15em 0;text-transform:uppercase;letter-spacing:.04em;line-height:1.05}
+.sub{color:var(--muted);font-style:italic;max-width:680px;margin:6px auto}
+.rule{height:3px;background:var(--accent);margin:14px 0}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}@media(max-width:760px){.grid{grid-template-columns:1fr}}
+.card{background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--accent);padding:18px;margin-top:16px}
+.card h2{margin:0 0 4px;text-transform:uppercase;letter-spacing:.08em;font-size:1.05rem;color:var(--accent)}
+.card p.hint{color:var(--muted);font-size:.9rem;margin:0 0 12px}
+label{display:block;font-size:.82rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:10px 0 4px}
+input,select{width:100%;background:#120B04;color:var(--text);border:1px solid var(--line);padding:10px;font-family:inherit;font-size:1rem}
+input:focus,select:focus{outline:2px solid var(--accent)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.hero{text-align:center;padding:24px}
+.seal{display:inline-flex;align-items:center;justify-content:center;width:150px;height:150px;border-radius:50%;border:3px double var(--accent);background:var(--surface2);color:var(--accent);font-weight:bold;text-transform:uppercase;letter-spacing:.06em;text-align:center;padding:14px;font-size:.95rem;line-height:1.25}
+.big{font-size:clamp(2rem,6vw,3.2rem);color:var(--accent);font-weight:bold}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:14px}
+.kpi{background:var(--surface2);border:1px solid var(--line);padding:12px;text-align:center}.kpi b{display:block;font-size:1.35rem;color:var(--accent)}.kpi span{font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+table{width:100%;border-collapse:collapse;font-size:.92rem}th,td{border-bottom:1px solid var(--line);padding:8px 6px;text-align:left}th{text-transform:uppercase;letter-spacing:.06em;color:var(--accent);font-size:.75rem}
+.ded{display:grid;grid-template-columns:1.4fr .7fr 1fr auto;gap:8px;margin-bottom:8px;align-items:end}@media(max-width:760px){.ded{grid-template-columns:1fr 1fr}}
+.checks{display:flex;gap:10px;flex-wrap:wrap;font-size:.85rem;color:var(--muted)}.checks label{text-transform:none;letter-spacing:0;margin:0;display:flex;gap:5px;align-items:center}.checks input{width:auto}
+button{background:var(--accent);color:#171006;border:0;padding:11px 16px;font-family:inherit;font-weight:bold;text-transform:uppercase;letter-spacing:.06em;cursor:pointer}
+button.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}button.small{padding:7px 10px;font-size:.8rem}
+.warn{color:var(--red);font-weight:bold}.ok{color:var(--green);font-weight:bold}
+.verdict{font-style:italic;color:var(--muted);text-align:center;max-width:720px;margin:12px auto 0}
+footer{color:var(--muted);font-size:.85rem;text-align:center;margin-top:28px}
+.saved{display:flex;gap:8px;flex-wrap:wrap}.pill{border:1px solid var(--line);padding:6px 10px;background:var(--surface2)}
+</style></head>
+<body><div class="wrap">
+<header><div class="eyebrow">Walnut Court · Est. for honest landlords</div><h1>The Deposit Verdict</h1>
+<p class="sub">Before you keep a dollar of a security deposit, stand trial. Itemize it, prove it, check the deadline — or find out what a judge could award against you.</p></header>
+
+<div class="card"><h2>I. The Case</h2><p class="hint">The facts. No adjectives, no “they left it filthy.” Numbers and dates only.</p>
+<div class="grid"><div>
+<label>Security deposit held ($)</label><input id="deposit" type="number" value="2400" min="0" step="10">
+<label>Monthly rent ($)</label><input id="rent" type="number" value="1600" min="0" step="10">
+<label>Move-out date</label><input id="moveout" type="date" value="2026-10-01">
+</div><div>
+<label>State rule preset</label><select id="state"></select>
+<p class="hint" id="stateNote" style="margin-top:8px"></p>
+<label>Tenant gave a forwarding address?</label><select id="fwd"><option value="yes">Yes</option><option value="no">No</option></select>
+<label>Move-in condition record exists?</label><select id="movein"><option value="yes">Yes — signed / photos</option><option value="no">No</option></select>
+</div></div></div>
+
+<div class="card"><h2>II. The Deductions</h2><p class="hint">One line per claim. Tick the proof you actually hold — a judge will ask for exactly this.</p>
+<div id="deds"></div>
+<button class="ghost" id="add">+ Add deduction</button>
+<div class="row2" style="margin-top:12px"><div><label>Unpaid rent / fees owed ($)</label><input id="unpaid" type="number" value="0" min="0" step="10"></div>
+<div><label>Days since move-out (auto)</label><input id="daysOut" disabled></div></div>
+</div>
+
+<div class="card hero"><div class="eyebrow">The Verdict</div><div style="margin:14px"><span class="seal" id="seal">—</span></div>
+<div class="big" id="refundBig">$0 refund due</div>
+<p class="verdict" id="verdictText"></p>
+<div class="kpis">
+<div class="kpi"><b id="kClaimed">$0</b><span>Total claimed</span></div>
+<div class="kpi"><b id="kStrong">$0</b><span>Documented &amp; strong</span></div>
+<div class="kpi"><b id="kRisk">$0</b><span>At-risk (weak proof)</span></div>
+<div class="kpi"><b id="kDeadline">—</b><span>Refund deadline</span></div>
+<div class="kpi"><b id="kExposure">$0</b><span>Worst-case exposure</span></div>
+<div class="kpi"><b id="kScore">0%</b><span>Documentation score</span></div>
+</div></div>
+
+<div class="grid">
+<div class="card"><h2>III. Where You Stand</h2><div id="findings"></div></div>
+<div class="card"><h2>IV. If It Went to Court</h2><p class="hint">Sensitivity: what wrongful withholding could cost at different penalty levels, on the at-risk amount plus any overdue refund.</p>
+<table><thead><tr><th>Penalty</th><th>You could owe</th></tr></thead><tbody id="sens"></tbody></table></div>
+</div>
+
+<div class="card"><h2>V. Save &amp; Send the Record</h2><p class="hint">Save cases on this device, or copy a clean summary for the itemized statement you mail the tenant.</p>
+<div class="row2"><div><label>Case name (address / tenant)</label><input id="caseName" placeholder="e.g. 12 Oak St — Unit B"></div>
+<div style="display:flex;gap:8px;align-items:end"><button id="save">Save case</button><button class="ghost" id="copy">Copy summary</button></div></div>
+<div class="saved" id="saved" style="margin-top:12px"></div>
+<pre id="summary" style="white-space:pre-wrap;background:#120B04;border:1px solid var(--line);padding:12px;margin-top:14px"></pre></div>
+
+<footer>The Deposit Verdict is an educational calculator, not legal advice. State and city deposit laws vary and change — verify your deadline and penalty with your local code or attorney before withholding. Normal wear and tear is not damage, in any courtroom.</footer>
+</div>
+<script>
+const STATES={
+ generic:{name:"Generic U.S. (verify locally)",days:30,mult:2,note:"Common pattern: return + itemize within ~30 days; bad-faith withholding can cost up to 2× the amount wrongfully withheld."},
+ NJ:{name:"New Jersey",days:30,mult:2,note:"NJ: return within 30 days of lease end; wrongful withholding can cost up to 2× plus court costs/fees."},
+ NY:{name:"New York",days:14,mult:2,note:"NY: return + itemize within 14 days or forfeit the right to withhold; willful violations up to 2× punitive."},
+ CA:{name:"California",days:21,mult:2,note:"CA: itemize + return within 21 days; bad-faith retention can cost up to 2× in statutory damages (up to 3× total exposure)."},
+ PA:{name:"Pennsylvania",days:30,mult:2,note:"PA: written list + refund within 30 days or forfeit deductions; tenant may recover 2× wrongfully withheld."},
+ FL:{name:"Florida",days:30,mult:2,note:"FL: return in 15 days if no claim; if claiming, send notice within 30 days (tenant then has 15 days to object). Missing notice forfeits the claim."},
+ TX:{name:"Texas",days:30,mult:3,note:"TX: refund within 30 days; bad-faith retention: $100 + 3× the amount wrongfully withheld + fees."}
+};
+const $=id=>document.getElementById(id);
+const money=n=>"$"+Math.round(n).toLocaleString();
+let deds=[
+ {name:"Carpet replacement — living room",amt:650,cat:"Damage",photo:true,inv:false,rec:true},
+ {name:"Deep clean",amt:275,cat:"Cleaning",photo:false,inv:true,rec:false},
+ {name:"Wall repaint — scuffs & holes",amt:300,cat:"Damage",photo:true,inv:false,rec:false}
+];
+function stateSel(){Object.entries(STATES).forEach(([k,v])=>{let o=document.createElement("option");o.value=k;o.textContent=v.name;$("state").appendChild(o)});$("state").value="generic"}
+function renderDeds(){$("deds").innerHTML="";deds.forEach((d,i)=>{let div=document.createElement("div");div.className="ded";
+ div.innerHTML=`<div><label>Item</label><input data-i="${i}" data-f="name" value="${d.name.replace(/"/g,'&quot;')}"></div>
+ <div><label>Amount $</label><input type="number" min="0" step="5" data-i="${i}" data-f="amt" value="${d.amt}"></div>
+ <div><label>Proof held</label><div class="checks">
+ <label><input type="checkbox" data-i="${i}" data-f="photo" ${d.photo?"checked":""}> Photos</label>
+ <label><input type="checkbox" data-i="${i}" data-f="inv" ${d.inv?"checked":""}> Invoice</label>
+ <label><input type="checkbox" data-i="${i}" data-f="rec" ${d.rec?"checked":""}> Move-in record</label></div></div>
+ <button class="ghost small" data-del="${i}">Remove</button>`;
+ $("deds").appendChild(div)});
+ document.querySelectorAll("#deds input").forEach(el=>el.addEventListener("input",e=>{let i=+e.target.dataset.i,f=e.target.dataset.f;deds[i][f]=e.target.type==="checkbox"?e.target.checked:(f==="amt"?+e.target.value:e.target.value);calc()}));
+ document.querySelectorAll("[data-del]").forEach(b=>b.addEventListener("click",e=>{deds.splice(+e.target.dataset.del,1);renderDeds();calc()}))}
+function calc(){
+ const st=STATES[$("state").value];$("stateNote").textContent=st.note;
+ const dep=+$("deposit").value||0,unpaid=+$("unpaid").value||0;
+ const claimed=deds.reduce((s,d)=>s+(+d.amt||0),0)+unpaid;
+ let strong=unpaid, risk=0, pts=0, max=0;
+ deds.forEach(d=>{let p=(d.photo?1:0)+(d.inv?1:0)+(d.rec?1:0);pts+=p;max+=3;let a=+d.amt||0;
+   if(p>=2)strong+=a; else risk+=a});
+ const score=max?Math.round(pts/max*100):100;
+ const refund=Math.max(0,dep-claimed);
+ const mo=new Date($("moveout").value+"T12:00:00");const dl=new Date(mo);dl.setDate(dl.getDate()+st.days);
+ const today=new Date();const daysOut=Math.max(0,Math.floor((today-mo)/86400000));$("daysOut").value=daysOut+" days";
+ const overdue=today>dl&&refund>0;
+ const lateBase=overdue?refund:0;
+ const exposure=risk*st.mult+lateBase*st.mult;
+ let seal,verdict;
+ if(overdue&&refund>0){seal="Overdue — Exposed";verdict="The deadline has passed and money is still owed. Every extra day strengthens the tenant's case, not yours. Refund today, in full, with the itemized statement."}
+ else if(risk>claimed*0.5&&claimed>0){seal="Court Bait";verdict="Most of what you are claiming rests on weak proof. A judge does not grade on effort — undocumented damage reads as wear and tear. Get invoices, or let it go."}
+ else if(risk>0){seal="Proceed With Proof";verdict="Your core claim holds up, but part of it is exposed. Shore up the weak lines before the deadline, or deduct only what you can prove."}
+ else{seal="Clean Verdict";verdict="Documented, itemized, and inside the deadline. This is how deposits are supposed to end — refund the balance and keep the file."}
+ if($("fwd").value==="no"){verdict+=" Note: no forwarding address on file — document your good-faith attempt to reach the tenant; most states toll the deadline until one is provided."}
+ if($("movein").value==="no"&&claimed>0){verdict+=" Without a move-in record, proving the damage was not already there is an uphill fight."}
+ $("seal").textContent=seal;$("refundBig").textContent=money(refund)+" refund due";$("verdictText").textContent=verdict;
+ $("kClaimed").textContent=money(claimed);$("kStrong").textContent=money(strong);$("kRisk").textContent=money(risk);
+ $("kDeadline").textContent=dl.toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"});
+ $("kExposure").textContent=money(exposure);$("kScore").textContent=score+"%";
+ let f=[];
+ f.push(`<p>Deadline: <b>${dl.toDateString()}</b> — ${overdue?'<span class="warn">PASSED</span>':'<span class="ok">'+Math.ceil((dl-today)/86400000)+' days left</span>'}</p>`);
+ f.push(`<p>${risk>0?'<span class="warn">'+money(risk)+' claimed on 0–1 pieces of proof.</span> Weak lines are the first thing a judge throws out.':'<span class="ok">Every deduction carries at least two forms of proof.</span>'}</p>`);
+ f.push(`<p>Refund owed to tenant: <b>${money(refund)}</b>${claimed>dep?' <span class="warn">— claims exceed the deposit; the excess is a separate collection matter, not a deduction.</span>':''}</p>`);
+ f.push(`<p>Wear-and-tear check: repainting for ordinary scuffs and carpet wear for a long tenancy are routinely denied. Price damage at depreciated value, not new-for-old.</p>`);
+ $("findings").innerHTML=f.join("");
+ $("sens").innerHTML=[0,1,2,3].map(m=>`<tr><td>${m===0?"No penalty — refund only":m+"× wrongful amount"}</td><td>${money(refund+(risk+lateBase)*m)}</td></tr>`).join("");
+ $("summary").textContent=`THE DEPOSIT VERDICT — ${$("caseName").value||"Untitled case"}\nDeposit held: ${money(dep)} · Claimed: ${money(claimed)} · Refund due: ${money(refund)}\nDeadline (${st.name}): ${dl.toDateString()} · Documentation score: ${score}%\nDocumented & strong: ${money(strong)} · At-risk (weak proof): ${money(risk)}\nWorst-case exposure at ${st.mult}×: ${money(exposure)}\nVerdict: ${seal}`;
+}
+$("add").addEventListener("click",()=>{deds.push({name:"",amt:0,cat:"Other",photo:false,inv:false,rec:false});renderDeds();calc()});
+["deposit","rent","moveout","state","fwd","movein","unpaid","caseName"].forEach(id=>$(id).addEventListener("input",calc));
+function saved(){try{return JSON.parse(localStorage.getItem("depositVerdict")||"[]")}catch(e){return[]}}
+function renderSaved(){$("saved").innerHTML=saved().map((s,i)=>`<span class="pill">${s.name} — ${money(s.refund)} refund <button class="ghost small" data-load="${i}">Load</button></span>`).join("");
+ document.querySelectorAll("[data-load]").forEach(b=>b.addEventListener("click",e=>{let s=saved()[+e.target.dataset.load];$("deposit").value=s.dep;$("unpaid").value=s.unpaid;$("moveout").value=s.mo;$("state").value=s.st;deds=s.deds;$("caseName").value=s.name;renderDeds();calc()}))}
+$("save").addEventListener("click",()=>{let a=saved();a.push({name:$("caseName").value||"Untitled case",dep:+$("deposit").value,unpaid:+$("unpaid").value,mo:$("moveout").value,st:$("state").value,deds,refund:Math.max(0,(+$("deposit").value||0)-(deds.reduce((s,d)=>s+(+d.amt||0),0)+(+$("unpaid").value||0)))});localStorage.setItem("depositVerdict",JSON.stringify(a));renderSaved()});
+$("copy").addEventListener("click",()=>{navigator.clipboard&&navigator.clipboard.writeText($("summary").textContent);$("copy").textContent="Copied ✓";setTimeout(()=>$("copy").textContent="Copy summary",1200)});
+stateSel();renderDeds();renderSaved();calc();
+if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js");
+</script></body></html>
